@@ -4,6 +4,8 @@ A local web UI for reviewing and trimming **LeRobot v3.0** datasets: watch every
 camera, see the joint traces, drag two handles to crop an episode's head and
 tail, delete the takes that went wrong, fix the task text — then write it back.
 
+![Dragging both crop handles in on an episode: the filmstrip and joint charts dim outside the kept range, the kept frame count and duration update live, and the episode picks up a staged-edit badge](docs/demo.gif)
+
 ```bash
 ./run.sh                                  # discovers datasets, opens a browser
 ./run.sh --root ~/data/datasets --port 8800
