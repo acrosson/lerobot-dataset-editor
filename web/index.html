@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LeRobot dataset editor</title>
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='13' font-size='13'>✂️</text></svg>">
+</head>
+<body>
+<div id="app">
+
+  <div class="topbar">
+    <span class="brand">✂ dataset editor</span>
+    <select id="dsPicker" title="Dataset"></select>
+    <span class="meta" id="dsMeta"></span>
+    <span class="spacer"></span>
+    <span class="badge" id="stagedBadge" hidden></span>
+    <button id="revertBtn" class="ghost" disabled title="Discard every staged edit">Revert</button>
+    <button id="saveBtn" class="primary" disabled title="Write staged edits to disk (⌘S)">Save…</button>
+  </div>
+
+  <div class="body">
+    <div class="sidebar">
+      <header>
+        <input type="text" id="epFilter" placeholder="filter episodes…" autocomplete="off">
+      </header>
+      <div class="eplist" id="epList"></div>
+      <footer id="sidebarFoot"></footer>
+    </div>
+
+    <div class="stage" id="stage">
+      <div class="empty" id="emptyState">Loading…</div>
+    </div>
+  </div>
+</div>
+
+<template id="stageTpl">
+  <div class="ephead">
+    <span class="title" id="epTitle"></span>
+    <button id="prevBtn" class="ghost" title="Previous episode (↑)">←</button>
+    <button id="nextBtn" class="ghost" title="Next episode (↓)">→</button>
+    <input type="text" class="task" id="taskInput" placeholder="task description" spellcheck="false">
+    <button id="taskResetBtn" class="ghost" hidden title="Restore the recorded task">↺</button>
+    <button id="deleteBtn" class="danger" title="Mark this episode for deletion (⌫)">Delete episode</button>
+  </div>
+
+  <div class="viewers" id="viewers"></div>
+
+  <div class="transport">
+    <button id="playBtn" title="Play / pause (space)">▶</button>
+    <button id="stepBack" class="ghost" title="Back one frame (←)">⟨</button>
+    <button id="stepFwd" class="ghost" title="Forward one frame (→)">⟩</button>
+    <span class="clock" id="clock"></span>
+    <button id="markIn" title="Set crop start to the playhead ([)">[ in</button>
+    <button id="markOut" title="Set crop end to the playhead (])">out ]</button>
+    <button id="resetCrop" class="ghost" title="Clear the crop">full</button>
+    <button id="loopBtn" class="toggle" aria-pressed="false" title="Play only the kept range">⟲ crop</button>
+    <span class="spacer"></span>
+    <span class="hint" id="cropInfo"></span>
+    <button id="zoomOut" class="ghost" title="Zoom out">−</button>
+    <button id="zoomIn" class="ghost" title="Zoom in">+</button>
+  </div>
+
+  <div class="legend" id="legend"></div>
+
+  <div class="tracks" id="tracks">
+    <div class="trackinner" id="trackInner">
+      <div class="strip" id="strip"></div>
+      <div class="chart" id="ruler"><canvas></canvas></div>
+      <div class="chart" id="chartJoints"><span class="label">joint positions (rad)</span><canvas></canvas></div>
+      <div class="chart" id="chartGripper"><span class="label">gripper</span><canvas></canvas></div>
+      <div class="chart" id="chartSpeed"><span class="label">motion — Σ|Δstate| per frame, near zero means the arm is idle</span><canvas></canvas></div>
+      <div class="overlay" id="overlay">
+        <div class="mask left" id="maskLeft"></div>
+        <div class="mask right" id="maskRight"></div>
+        <div class="handle" id="handleIn"></div>
+        <div class="handle" id="handleOut"></div>
+        <div class="playhead" id="playhead"></div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<dialog id="confirmDlg">
+  <h2 id="confirmTitle"></h2>
+  <div class="content" id="confirmBody"></div>
+  <footer>
+    <button value="cancel" id="confirmCancel">Cancel</button>
+    <button value="ok" id="confirmOk" class="primary"></button>
+  </footer>
+</dialog>
+
+<script src="charts.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

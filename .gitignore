@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Dataset artefacts.
+# The editor writes these *inside* the dataset directory, which normally lives
+# well outside this repo — but point --root at a checkout, or drop a dataset in
+# here to try something, and they appear underfoot. All regenerable caches,
+# backups, or raw capture data; none of it belongs in version control.
+# (Deliberately not ignoring bare data/, videos/ or meta/: those names are too
+# common to blanket-ignore, and the extensions below catch the actual payload.)
+_editor/
+_backups/
+_review/
+*.parquet
+*.mp4
+*.rrd
+
+# Runtime noise
+*.log
+nohup.out
+
+# macOS
+.DS_Store
+._*
+
+# Editors
+.vscode/
+.idea/
+*.swp
